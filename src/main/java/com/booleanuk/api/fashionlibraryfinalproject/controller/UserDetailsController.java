@@ -18,9 +18,9 @@ public class UserDetailsController {
     @Autowired
     private UserDetailsRepository userRepository;
 
-// TODO, check if <User> has the right reference!
+// DONE, check if <User> has the right reference!
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<UserDetails> getAllUsers() {
         return this.userRepository.findAll();
     }
 

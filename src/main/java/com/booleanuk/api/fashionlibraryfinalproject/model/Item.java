@@ -15,14 +15,19 @@ public class Item {
 
     @Column(name = "title")
     private String title;
+    @Column(name = "item_type")
+    private String itemType;
     @Column(name = "brand")
     private String brand;
     @Column(name = "size")
-    private int size;
+    private String size;
+    @Column(name = "available_sizes")
+    private String availableSizes;
+
     @Column(name = "item_status")
     private String itemStatus;
     @Column(name = "price_per_day")
-    private double pricePerDay;
+    private String pricePerDay;
     @Column(name = "price_to_buy")
     private double priceToBuy;
     @Column(name = "updated_at")
@@ -33,7 +38,7 @@ public class Item {
         super();
     }
 
-    public Item(String title, String brand, int size, String itemStatus, double pricePerDay, double priceToBuy, LocalDateTime updatedAt) {
+    public Item(String title, String brand, String size, String itemStatus, String pricePerDay, double priceToBuy, LocalDateTime updatedAt) {
         this.title = title;
         this.brand = brand;
         this.size = size;
@@ -67,11 +72,11 @@ public class Item {
         this.brand = brand;
     }
 
-    public int getSize() {
+    public String getSize() {
         return size;
     }
 
-    public void setSize(int size) {
+    public void setSize(String size) {
         this.size = size;
     }
 
@@ -83,11 +88,11 @@ public class Item {
         this.itemStatus = itemStatus;
     }
 
-    public double getPricePerDay() {
+    public String getPricePerDay() {
         return pricePerDay;
     }
 
-    public void setPricePerDay(double pricePerDay) {
+    public void setPricePerDay(String pricePerDay) {
         this.pricePerDay = pricePerDay;
     }
 

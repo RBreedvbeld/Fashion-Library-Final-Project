@@ -18,7 +18,7 @@ public class Basket {
 
     @Column(name = "amount_item(s)")
     private int amountItem;
-    @Column(name = "total_price_p/d")
+    @Column(name = "total_credit_price_p/d")
     private double totalPricePerDay;
 
     @Column(name = "total_price_to_buy")
