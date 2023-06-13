@@ -7,7 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user_details")
+@Table(name = "users")
 public class UserDetails {
 
 
@@ -15,8 +15,10 @@ public class UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "last_name")
+    private String lastName;
     @Column(name = "address")
     private String address;
     @Column(name = "email")
@@ -40,11 +42,14 @@ public class UserDetails {
     private LocalDateTime updatedAt;
 
     public UserDetails(int id) {
-        super();
+        this.id = id;
+    }
+    public UserDetails() {
     }
 
-    public UserDetails(String name, String address, String email, String phone, int borrowedItems, String boughtItems, String customerOrMember, LocalDateTime itemBorrowedAt, LocalDateTime updatedAt) {
-        this.name = name;
+    public UserDetails(String firstName, String lastName, String address, String email, String phone, int borrowedItems, String boughtItems, String customerOrMember, LocalDateTime itemBorrowedAt, LocalDateTime updatedAt) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.address = address;
         this.email = email;
         this.phone = phone;
@@ -64,12 +69,20 @@ public class UserDetails {
         this.id = id;
     }
 
-    public String getName() {
-        return this.name;
+    public String getFirstName() {
+        return this.firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String name) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return this.lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {

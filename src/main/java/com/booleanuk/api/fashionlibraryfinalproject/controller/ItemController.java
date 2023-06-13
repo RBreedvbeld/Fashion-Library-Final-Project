@@ -32,6 +32,8 @@ public class ItemController {
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Item with this id is not found."));
         return ResponseEntity.ok(item);
     }
+
+    // TODO: @GetMapping by Type, Brand, Size, Availability and ItemStatus
 //    @GetMapping("{itemType}")
 //    public ResponseEntity<Item> getItemByType(@PathVariable String itemType) {
 //        Item item = null;
