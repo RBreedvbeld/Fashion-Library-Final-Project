@@ -24,4 +24,6 @@ public class UserDetailsController {
         return this.userRepository.findAll();
     }
 
+
+
 }

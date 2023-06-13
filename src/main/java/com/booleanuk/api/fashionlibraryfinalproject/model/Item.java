@@ -1,6 +1,7 @@
 package com.booleanuk.api.fashionlibraryfinalproject.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
@@ -24,32 +25,46 @@ public class Item {
     @Column(name = "available_sizes")
     private String availableSizes;
 
+// TODO: I want to make itemStatus a function, because the system can see if the 'Size' is available as an option in the 'availableSizes'
     @Column(name = "item_status")
     private String itemStatus;
     @Column(name = "price_per_day")
     private String pricePerDay;
     @Column(name = "price_to_buy")
     private double priceToBuy;
+    @Column(name = "created_at")
+    @CreationTimestamp
+    private LocalDateTime createdAt;
     @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    // constructors
     private Item(){
         super();
     }
 
-    public Item(String title, String brand, String size, String itemStatus, String pricePerDay, double priceToBuy, LocalDateTime updatedAt) {
+    public Item(String title, String brand, String size, String itemStatus, String pricePerDay, double priceToBuy) {
         this.title = title;
         this.brand = brand;
         this.size = size;
         this.itemStatus = itemStatus;
         this.pricePerDay = pricePerDay;
         this.priceToBuy = priceToBuy;
-        this.updatedAt = updatedAt;
+//        this.updatedAt = updatedAt;
+        LocalDateTime createdAt = LocalDateTime.now();
+        this.setCreatedAt(createdAt);
+        this.setUpdatedAt(createdAt);
     }
 
+    public LocalDateTime setCreatedAt(LocalDateTime createdAt
+    ) {
+        return this.createdAt = createdAt;
+    }
+
+    // getter- and setters
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(int id) {
@@ -57,7 +72,23 @@ public class Item {
     }
 
     public String getTitle() {
-        return title;
+        return this.title;
+    }
+
+    public String getItemType() {
+        return this.itemType;
+    }
+
+    public void setItemType(String itemType) {
+        this.itemType = itemType;
+    }
+
+    public String getAvailableSizes() {
+        return availableSizes;
+    }
+
+    public void setAvailableSizes(String availableSizes) {
+        this.availableSizes = availableSizes;
     }
 
     public void setTitle(String title) {
