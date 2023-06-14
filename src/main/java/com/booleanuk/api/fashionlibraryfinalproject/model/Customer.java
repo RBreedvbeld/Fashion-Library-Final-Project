@@ -5,28 +5,32 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Table(name = "account")
-public class Account {
+@Table(name = "customers")
+public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "title")
-    private String title;
+    @ManyToOne
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    private Order order;
+
+    @Column(name = "item_name")
+    private String itemName;
     @Column(name = "category")
     private String category;
+    // TODO: daysBorrowed() method that counts the days from start_date till end_date!!
     @Column(name = "days_borrowed")
     private String daysBorrowed;
     @Column(name = "payment_method")
     private String paymentMethod;
+    // TODO: If cardNumber = null, than paymendMethod = 'Cash'
     @Column(name = "card_number")
     private String cardNumber;
-
-
-
     @Column(name = "item_borrowed_at")
     @CreationTimestamp
     private LocalDateTime itemBorrowedAt;
@@ -34,12 +38,16 @@ public class Account {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public Account(int id) {
+    // constructors
+    public Customer(int id) {
        super();
     }
+    public Customer(){
+    }
+//    public List<Customer> customers;
 
-    public Account(String title, String category, String daysBorrowed, String paymentMethod, String cardNumber, LocalDateTime itemBorrowedAt, LocalDateTime updatedAt) {
-        this.title = title;
+    public Customer(String itemName, String category, String daysBorrowed, String paymentMethod, String cardNumber, LocalDateTime itemBorrowedAt, LocalDateTime updatedAt) {
+        this.itemName = itemName;
         this.category = category;
         this.daysBorrowed = daysBorrowed;
         this.paymentMethod = paymentMethod;
@@ -57,11 +65,11 @@ public class Account {
     }
 
     public String getTitle() {
-        return this.title;
+        return this.itemName;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.itemName = title;
     }
 
     public String getCategory() {
@@ -110,5 +118,9 @@ public class Account {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+
+    public void setUser(User tempUser) {
     }
 }

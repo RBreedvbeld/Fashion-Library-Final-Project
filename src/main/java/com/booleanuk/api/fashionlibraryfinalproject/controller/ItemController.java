@@ -2,8 +2,6 @@ package com.booleanuk.api.fashionlibraryfinalproject.controller;
 
 import com.booleanuk.api.fashionlibraryfinalproject.model.Item;
 import com.booleanuk.api.fashionlibraryfinalproject.repository.ItemRepository;
-import com.booleanuk.api.fashionlibraryfinalproject.repository.UserDetailsRepository;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

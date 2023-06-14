@@ -1,19 +1,35 @@
 package com.booleanuk.api.fashionlibraryfinalproject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class UserDetails {
+public class User {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @OneToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "borrowed_id", referencedColumnName = "id")
+    private BorrowedItem borrowedItem;
+
+    // TODO: Check if this @OneTo?Many is necessary?!
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("user")
+    private List<BorrowedItem> listBorrowedItems;
 
     @Column(name = "first_name")
     private String firstName;
@@ -29,6 +45,8 @@ public class UserDetails {
     private int borrowedItems;
     @Column(name = "bought_items")
     private String boughtItems;
+
+    // TODO: Find out how to write java for implementing if-statements for if user exists = true = member if not, casual user!
     @Column(name = "customer_or_member")
     private String customerOrMember;
 //    @Column(name = "member")
@@ -41,13 +59,14 @@ public class UserDetails {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public UserDetails(int id) {
+    // constructors
+    public User(int id) {
         this.id = id;
     }
-    public UserDetails() {
+    public User() {
     }
 
-    public UserDetails(String firstName, String lastName, String address, String email, String phone, int borrowedItems, String boughtItems, String customerOrMember, LocalDateTime itemBorrowedAt, LocalDateTime updatedAt) {
+    public User(String firstName, String lastName, String address, String email, String phone, int borrowedItems, String boughtItems, String customerOrMember, LocalDateTime itemBorrowedAt, LocalDateTime updatedAt) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -60,6 +79,25 @@ public class UserDetails {
         this.updatedAt = updatedAt;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", customer=" + customer +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", borrowedItems=" + borrowedItems +
+                ", boughtItems='" + boughtItems + '\'' +
+                ", customerOrMember='" + customerOrMember + '\'' +
+                ", itemBorrowedAt=" + itemBorrowedAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
+
+    // getter and setters
 
     public int getId() {
         return this.id;
@@ -141,12 +179,18 @@ public class UserDetails {
         this.boughtItems = boughtItems;
     }
 
-    public String getCustomerOrMember() {
-        return this.customerOrMember;
+//    public String getCustomerOrMember() {
+//        return this.customerOrMember;
+//    }
+//
+//    public void setCustomerOrMember(String customerOrMember) {
+//        this.customerOrMember = customerOrMember;
+//    }
+    public Customer getCustomer() {
+        return this.customer;
+    }
+    public void setCustomer(Customer tempCustomer) {
     }
 
-    public void setCustomerOrMember(String customerOrMember) {
-        this.customerOrMember = customerOrMember;
-    }
 
 }

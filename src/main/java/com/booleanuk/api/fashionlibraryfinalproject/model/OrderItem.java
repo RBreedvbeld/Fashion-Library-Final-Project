@@ -2,19 +2,18 @@ package com.booleanuk.api.fashionlibraryfinalproject.model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.context.annotation.EnableMBeanExport;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "basket")
-public class Basket {
+@Table(name = "order_items")
+public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "item")
-    private String item;
 
     @Column(name = "amount_item(s)")
     private int amountItem;
@@ -28,21 +27,42 @@ public class Basket {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public Basket () {
+    @ManyToOne
+    @JoinColumn(name =  "order_id", referencedColumnName = "id")
+    private Order order;
+
+    @ManyToOne
+    @JoinColumn(name =  "item_id", referencedColumnName = "id")
+    private Item item;
+
+    public OrderItem() {
         super();
     }
 
-
-    public Basket(String item, int amountItem, double totalPricePerDay, double totalPriceToBuy, LocalDateTime updatedAt) {
-        this.item = item;
+    public OrderItem(int amountItem, double totalPricePerDay, double totalPriceToBuy, LocalDateTime updatedAt, Order order, Item item) {
         this.amountItem = amountItem;
         this.totalPricePerDay = totalPricePerDay;
         this.totalPriceToBuy = totalPriceToBuy;
         this.updatedAt = updatedAt;
+        this.order = order;
+        this.item = item;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderItem{" +
+                "id=" + id +
+                ", amountItem=" + amountItem +
+                ", totalPricePerDay=" + totalPricePerDay +
+                ", totalPriceToBuy=" + totalPriceToBuy +
+                ", updatedAt=" + updatedAt +
+                ", order=" + order +
+                ", item=" + item +
+                '}';
     }
 
     public int getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(int id) {
@@ -50,22 +70,15 @@ public class Basket {
     }
 
     public int getAmountItem() {
-        return this.amountItem;
+        return amountItem;
     }
 
     public void setAmountItem(int amountItem) {
         this.amountItem = amountItem;
     }
 
-    public String getItem() {
-        return this.item;
-    }
-
-    public void setItem(String item) {
-        this.item = item;
-    }
     public double getTotalPricePerDay() {
-        return this.totalPricePerDay;
+        return totalPricePerDay;
     }
 
     public void setTotalPricePerDay(double totalPricePerDay) {
@@ -73,7 +86,7 @@ public class Basket {
     }
 
     public double getTotalPriceToBuy() {
-        return this.totalPriceToBuy;
+        return totalPriceToBuy;
     }
 
     public void setTotalPriceToBuy(double totalPriceToBuy) {
@@ -81,11 +94,26 @@ public class Basket {
     }
 
     public LocalDateTime getUpdatedAt() {
-        return this.updatedAt;
+        return updatedAt;
     }
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
 }
