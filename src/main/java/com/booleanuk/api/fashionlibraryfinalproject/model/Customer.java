@@ -1,5 +1,7 @@
 package com.booleanuk.api.fashionlibraryfinalproject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -15,9 +17,12 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
-    private Order order;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("customer")
+//    @JsonIncludeProperties(value = {"order_date"})
+    private List<Order> listOrder;
+//    @JoinColumn(name = "order_id", referencedColumnName = "id")
+//    private Order order;
 
     @Column(name = "item_name")
     private String itemName;

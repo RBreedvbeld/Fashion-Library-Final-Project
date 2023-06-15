@@ -1,5 +1,6 @@
 package com.booleanuk.api.fashionlibraryfinalproject.controller;
 
+import com.booleanuk.api.fashionlibraryfinalproject.model.BorrowedItem;
 import com.booleanuk.api.fashionlibraryfinalproject.model.Customer;
 import com.booleanuk.api.fashionlibraryfinalproject.model.User;
 import com.booleanuk.api.fashionlibraryfinalproject.repository.BorrowedItemRepository;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
@@ -26,24 +27,30 @@ public class UserController {
     private BorrowedItemRepository borrowedItemRepository;
 
 
+    @GetMapping
+    public List<User> getAllPublishers() {
+        return this.userRepository.findAll();
+    }
+
 // DONE, check if <User> has the right reference!
-    @GetMapping("/users")
+    @GetMapping("{id}")
     public List<User> getAllUsers() {
         return this.userRepository.findAll();
     }
 
     // TODO: Is this path coming from users to customers?
-//    @PostMapping("customers/{id}/users")
-//    public ResponseEntity<User> createCustomerUser(@RequestBody User user, @PathVariable int id) {
-//        Customer tempCustomer = this.customerRepository.findById(id).orElseThrow(() ->
-//                new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not create User if customer is not found")); // TODO: not sure if this message is right.
-//        user.setCustomer(tempCustomer);
-//
-//        LocalDateTime createdAt = LocalDateTime.now();
-//        user.setItemBorrowedAt(createdAt);
-//        user.setUpdatedAt(createdAt);
-//        return new ResponseEntity<User>(this.userRepository.save(user), HttpStatus.CREATED);
-//    }
+//    ("customers/{id}/users")
+    @PostMapping("/users")
+    public ResponseEntity<User> createCustomerUser(@RequestBody User user, @PathVariable int id) {
+        Customer tempCustomer = this.customerRepository.findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not create User if customer is not found")); // TODO: not sure if this message is right.
+        user.setCustomer(tempCustomer);
+
+        LocalDateTime createdAt = LocalDateTime.now();
+        user.setItemBorrowedAt(createdAt);
+        user.setUpdatedAt(createdAt);
+        return new ResponseEntity<User>(this.userRepository.save(user), HttpStatus.CREATED);
+    }
 //    @GetMapping("customers/{id}/users")
 //        public List<User> getAll(@PathVariable int customer_id) {
 //        List<User> users = this.userRepository.getCustomerByUserId(customer_id);
@@ -71,7 +78,8 @@ public class UserController {
         userToUpdate.setPhone(user.getPhone());
         userToUpdate.setBorrowedItems(user.getBorrowedItems());
         userToUpdate.setBoughtItems(user.getBoughtItems());
-        userToUpdate.setCustomer(user.getCustomer());
+        // TODO: Check getCustomer
+//        userToUpdate.setCustomer(user.getCustomer());
 
         LocalDateTime createdAt = LocalDateTime.now();
         userToUpdate.setUpdatedAt(LocalDateTime.now());

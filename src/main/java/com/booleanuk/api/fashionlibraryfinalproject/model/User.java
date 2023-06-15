@@ -18,9 +18,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private Customer customer;
+//    @OneToOne
+//    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+//   @JsonIgnoreProperties("user")
+//    private List<BorrowedItem> borrowedItems;
+//    public List<BorrowedItem> getListBorrowedItems() {
+//        return borrowedItems;
+//    }
 
     @ManyToOne
     @JoinColumn(name = "borrowed_id", referencedColumnName = "id")
@@ -42,7 +46,7 @@ public class User {
     @Column(name = "phone")
     private String phone;
     @Column(name = "borrowed_items")
-    private int borrowedItems;
+    private int numBorrowedItems;
     @Column(name = "bought_items")
     private String boughtItems;
 
@@ -66,36 +70,19 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, String address, String email, String phone, int borrowedItems, String boughtItems, String customerOrMember, LocalDateTime itemBorrowedAt, LocalDateTime updatedAt) {
+    public User(String firstName, String lastName, String address, String email, String phone, int numBorrowedItems, String boughtItems, String customerOrMember, LocalDateTime itemBorrowedAt, LocalDateTime updatedAt) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.email = email;
         this.phone = phone;
-        this.borrowedItems = borrowedItems;
+        this.numBorrowedItems = numBorrowedItems;
         this.boughtItems = boughtItems;
         this.customerOrMember = customerOrMember;
         this.itemBorrowedAt = itemBorrowedAt;
         this.updatedAt = updatedAt;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", customer=" + customer +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", address='" + address + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", borrowedItems=" + borrowedItems +
-                ", boughtItems='" + boughtItems + '\'' +
-                ", customerOrMember='" + customerOrMember + '\'' +
-                ", itemBorrowedAt=" + itemBorrowedAt +
-                ", updatedAt=" + updatedAt +
-                '}';
-    }
 
     // getter and setters
 
@@ -164,11 +151,11 @@ public class User {
     }
 
     public int getBorrowedItems() {
-        return this.borrowedItems;
+        return this.numBorrowedItems;
     }
 
     public void setBorrowedItems(int borrowedItems) {
-        this.borrowedItems = borrowedItems;
+        this.numBorrowedItems = borrowedItems;
     }
 
     public String getBoughtItems() {
@@ -186,11 +173,44 @@ public class User {
 //    public void setCustomerOrMember(String customerOrMember) {
 //        this.customerOrMember = customerOrMember;
 //    }
-    public Customer getCustomer() {
-        return this.customer;
+
+//    public void setBorrowedItems(List<BorrowedItem> borrowedItems) {
+//        this.borrowedItems = borrowedItems;
+//    }
+
+    public BorrowedItem getBorrowedItem() {
+        return borrowedItem;
     }
+
+    public void setBorrowedItem(BorrowedItem borrowedItem) {
+        this.borrowedItem = borrowedItem;
+    }
+
+    public void setListBorrowedItems(List<BorrowedItem> listBorrowedItems) {
+        this.listBorrowedItems = listBorrowedItems;
+    }
+
+    public int getNumBorrowedItems() {
+        return numBorrowedItems;
+    }
+
+    public void setNumBorrowedItems(int numBorrowedItems) {
+        this.numBorrowedItems = numBorrowedItems;
+    }
+
+    public String getCustomerOrMember() {
+        return customerOrMember;
+    }
+
+    public void setCustomerOrMember(String customerOrMember) {
+        this.customerOrMember = customerOrMember;
+    }
+
     public void setCustomer(Customer tempCustomer) {
     }
 
 
+//    public Customer getCustomer() {
+//        return customer;
+//    }
 }

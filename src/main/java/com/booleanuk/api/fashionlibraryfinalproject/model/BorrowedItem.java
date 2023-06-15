@@ -26,8 +26,6 @@ public class BorrowedItem {
 
     @Column(name = "quantity_item")
     private int quantityItem;
-    @Column(name = "item_size")
-    private String itemSize;
 
     // TODO: use these startBorrowDateAt() and endBorrowDateAt() for calculating days that item has been borrowed!
     @Column(name = "start_borrow_date")
@@ -45,11 +43,13 @@ public class BorrowedItem {
 
     }
 
-    public BorrowedItem(User user, Item item, int quantityItem, String itemSize, LocalDateTime startBorrowDateAt, LocalDateTime endBorrowDateAt) {
+    // TODO HAve a look at the constructors, maybe need a Setter constructor?
+    // TODO removed String itemSize out of constructor arguments
+    public BorrowedItem(User user, Item item, int quantityItem, LocalDateTime startBorrowDateAt, LocalDateTime endBorrowDateAt) {
         this.user = user;
         this.item = item;
         this.quantityItem = quantityItem;
-        this.itemSize = itemSize;
+//        this.itemSize = itemSize;
         this.startBorrowDateAt = startBorrowDateAt;
         this.endBorrowDateAt = endBorrowDateAt;
     }
@@ -62,7 +62,7 @@ public class BorrowedItem {
                 ", user=" + user +
                 ", item=" + item +
                 ", quantityItem=" + quantityItem +
-                ", itemSize='" + itemSize + '\'' +
+//                ", itemSize='" + itemSize + '\'' +
                 ", startBorrowDateAt=" + startBorrowDateAt +
                 ", endBorrowDateAt=" + endBorrowDateAt +
                 '}';
@@ -101,13 +101,13 @@ public class BorrowedItem {
         this.quantityItem = quantityItem;
     }
 
-    public String getItemSize() {
-        return itemSize;
-    }
-
-    public void setItemSize(String itemSize) {
-        this.itemSize = itemSize;
-    }
+//    public String getItemSize() {
+//        return itemSize;
+//    }
+//
+//    public void setItemSize(String itemSize) {
+//        this.itemSize = itemSize;
+//    }
 
     public LocalDateTime getStartBorrowDateAt() {
         return startBorrowDateAt;

@@ -1,10 +1,13 @@
 package com.booleanuk.api.fashionlibraryfinalproject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.context.annotation.EnableMBeanExport;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "order_items")
@@ -14,6 +17,14 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @ManyToOne
+    @JoinColumn(name =  "item_id", referencedColumnName = "id")
+//    @JsonIgnoreProperties("orderItem")
+    private Item item;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    private Order order;
 
     @Column(name = "amount_item(s)")
     private int amountItem;
@@ -27,14 +38,7 @@ public class OrderItem {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @ManyToOne
-    @JoinColumn(name =  "order_id", referencedColumnName = "id")
-    private Order order;
-
-    @ManyToOne
-    @JoinColumn(name =  "item_id", referencedColumnName = "id")
-    private Item item;
-
+    // constructors
     public OrderItem() {
         super();
     }

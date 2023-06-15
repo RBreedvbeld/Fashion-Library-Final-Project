@@ -1,10 +1,13 @@
 package com.booleanuk.api.fashionlibraryfinalproject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "items")
@@ -14,7 +17,17 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+//    @ManyToOne
+//    @JoinColumn(name = "orderItem_id", referencedColumnName = "id")
+//    @JsonIgnoreProperties("items")
+//    private OrderItem orderItem;
 
+    @OneToMany(mappedBy = "item")
+    @JsonIgnoreProperties("item")
+    private List<OrderItem> orderItems;
+    @OneToMany(mappedBy = "item")
+    @JsonIgnoreProperties("item")
+    private List<BorrowedItem> listBorrowedItems;
 
     @Column(name = "title")
     private String title;
@@ -46,13 +59,15 @@ public class Item {
         super();
     }
 
+    // TODO removed OrderItem orderItem from constructor because commented out in fields
     public Item(String title, String brand, String size, String itemStatus, String pricePerDay, double priceToBuy) {
-        this.title = title;
-        this.brand = brand;
-        this.size = size;
-        this.itemStatus = itemStatus;
-        this.pricePerDay = pricePerDay;
-        this.priceToBuy = priceToBuy;
+        this.setTitle(title);
+        this.setBrand(brand);
+        this.setSize(size);
+        this.setItemStatus(itemStatus);
+        this.setPricePerDay(pricePerDay);
+        this.setPriceToBuy(priceToBuy);
+//        this.orderItem = orderItem;
 //        this.updatedAt = updatedAt;
         LocalDateTime createdAt = LocalDateTime.now();
         this.setCreatedAt(createdAt);

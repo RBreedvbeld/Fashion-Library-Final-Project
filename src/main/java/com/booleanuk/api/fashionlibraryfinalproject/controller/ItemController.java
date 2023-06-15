@@ -23,7 +23,7 @@ public class ItemController {
         return this.itemRepository.findAll();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Item> getItemById(@PathVariable int id) {
         Item item = null;
         item = this.itemRepository.findById(id).orElseThrow(() ->

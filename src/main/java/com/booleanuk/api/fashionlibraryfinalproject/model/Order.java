@@ -1,11 +1,13 @@
 package com.booleanuk.api.fashionlibraryfinalproject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -15,9 +17,17 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    // TODO Commented out @JsonIgnoreProperties Order from @ManyToOne
     @ManyToOne
     @JoinColumn (name = "customer_id", referencedColumnName = "id")
+//    @JsonIgnoreProperties("order")
     private Customer customer;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("order")
+//    @JoinColumn (name = "orderItem_id", referencedColumnName = "id")
+////    @JsonIgnoreProperties("order")
+////    @JsonIncludeProperties(value = {""})
+    private List<OrderItem> orderItem;
 
 
     @Column (name = "order_date")
@@ -28,6 +38,11 @@ public class Order {
     @UpdateTimestamp
     private LocalDateTime UpdateOrderDateAt;
 
+    public Order() {
+    }
+    public Order(int id) {
+        this.id = id;
+    }
     public Order(Customer customer, LocalDateTime orderDateAt, LocalDateTime updateOrderDateAt) {
         this.customer = customer;
         this.orderDateAt = orderDateAt;
