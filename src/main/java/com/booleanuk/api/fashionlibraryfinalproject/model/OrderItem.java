@@ -1,7 +1,9 @@
 package com.booleanuk.api.fashionlibraryfinalproject.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.context.annotation.EnableMBeanExport;
 import org.springframework.data.domain.Sort;
@@ -19,6 +21,7 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn(name =  "item_id", referencedColumnName = "id")
+    @JsonIncludeProperties(value = {"title", "type", "brand", "size", "price_per_day", "price_to_buy"})
 //    @JsonIgnoreProperties("orderItem")
     private Item item;
 
@@ -26,14 +29,17 @@ public class OrderItem {
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Order order;
 
-    @Column(name = "amount_item(s)")
+    @Column(name = "amount_item")
     private int amountItem;
-    @Column(name = "total_credit_price_p/d")
+    @Column(name = "total_credits_per_day")
     private double totalPricePerDay;
 
     @Column(name = "total_price_to_buy")
     private double totalPriceToBuy;
 
+    @Column(name = "created_at")
+    @CreationTimestamp
+    private LocalDateTime createdAt;
     @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
@@ -56,12 +62,13 @@ public class OrderItem {
     public String toString() {
         return "OrderItem{" +
                 "id=" + id +
+                ", item=" + item +
+                ", order=" + order +
                 ", amountItem=" + amountItem +
                 ", totalPricePerDay=" + totalPricePerDay +
                 ", totalPriceToBuy=" + totalPriceToBuy +
+                ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
-                ", order=" + order +
-                ", item=" + item +
                 '}';
     }
 
@@ -119,5 +126,13 @@ public class OrderItem {
 
     public void setItem(Item item) {
         this.item = item;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

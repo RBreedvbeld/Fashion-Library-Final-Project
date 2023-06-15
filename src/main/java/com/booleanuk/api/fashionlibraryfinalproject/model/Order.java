@@ -29,7 +29,6 @@ public class Order {
 ////    @JsonIncludeProperties(value = {""})
     private List<OrderItem> orderItem;
 
-
     @Column (name = "order_date")
     @CreationTimestamp
     private LocalDateTime orderDateAt;
