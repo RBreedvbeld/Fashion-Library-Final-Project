@@ -24,6 +24,8 @@ public class Customer {
 //    @JoinColumn(name = "order_id", referencedColumnName = "id")
 //    private Order order;
 
+
+
     @Column(name = "item_name")
     private String itemName;
     @Column(name = "category")
@@ -36,9 +38,9 @@ public class Customer {
     // TODO: If cardNumber = null, than paymendMethod = 'Cash'
     @Column(name = "card_number")
     private String cardNumber;
-    @Column(name = "item_borrowed_at")
-    @CreationTimestamp
-    private LocalDateTime itemBorrowedAt;
+//    @Column(name = "item_borrowed_at")
+//    @CreationTimestamp
+//    private LocalDateTime itemBorrowedAt;
     @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
@@ -50,14 +52,15 @@ public class Customer {
     public Customer(){
     }
 //    public List<Customer> customers;
+//LocalDateTime itemBorrowedAt
 
-    public Customer(String itemName, String category, String daysBorrowed, String paymentMethod, String cardNumber, LocalDateTime itemBorrowedAt, LocalDateTime updatedAt) {
+    public Customer(String itemName, String category, String daysBorrowed, String paymentMethod, String cardNumber, LocalDateTime updatedAt) {
         this.itemName = itemName;
         this.category = category;
         this.daysBorrowed = daysBorrowed;
         this.paymentMethod = paymentMethod;
         this.cardNumber = cardNumber;
-        this.itemBorrowedAt = itemBorrowedAt;
+//        this.itemBorrowedAt = itemBorrowedAt;
         this.updatedAt = updatedAt;
     }
 
@@ -109,13 +112,13 @@ public class Customer {
         this.cardNumber = cardNumber;
     }
 
-    public LocalDateTime getItemBorrowedAt() {
-        return this.itemBorrowedAt;
-    }
-
-    public void setItemBorrowedAt(LocalDateTime itemBorrowedAt) {
-        this.itemBorrowedAt = itemBorrowedAt;
-    }
+//    public LocalDateTime getItemBorrowedAt() {
+//        return this.itemBorrowedAt;
+//    }
+//
+//    public void setItemBorrowedAt(LocalDateTime itemBorrowedAt) {
+//        this.itemBorrowedAt = itemBorrowedAt;
+//    }
 
     public LocalDateTime getUpdatedAt() {
         return this.updatedAt;

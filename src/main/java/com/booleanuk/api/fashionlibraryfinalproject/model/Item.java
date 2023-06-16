@@ -101,7 +101,7 @@ public class Item {
     }
 
     public String getAvailableSizes() {
-        return availableSizes;
+        return this.availableSizes;
     }
 
     public void setAvailableSizes(String availableSizes) {
@@ -113,7 +113,7 @@ public class Item {
     }
 
     public String getBrand() {
-        return brand;
+        return this.brand;
     }
 
     public void setBrand(String brand) {
@@ -121,7 +121,7 @@ public class Item {
     }
 
     public String getSize() {
-        return size;
+        return this.size;
     }
 
     public void setSize(String size) {
@@ -129,7 +129,7 @@ public class Item {
     }
 
     public String getItemStatus() {
-        return itemStatus;
+        return this.itemStatus;
     }
 
     public void setItemStatus(String itemStatus) {
@@ -137,7 +137,7 @@ public class Item {
     }
 
     public String getPricePerDay() {
-        return pricePerDay;
+        return this.pricePerDay;
     }
 
     public void setPricePerDay(String pricePerDay) {
@@ -145,7 +145,7 @@ public class Item {
     }
 
     public double getPriceToBuy() {
-        return priceToBuy;
+        return this.priceToBuy;
     }
 
     public void setPriceToBuy(double priceToBuy) {
@@ -153,7 +153,7 @@ public class Item {
     }
 
     public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+        return this.updatedAt;
     }
 
     public void setUpdatedAt(LocalDateTime updatedAt) {

@@ -70,7 +70,7 @@ public class BorrowedItem {
 
     // getter and setters
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(int id) {
@@ -78,7 +78,7 @@ public class BorrowedItem {
     }
 
     public User getUser() {
-        return user;
+        return this.user;
     }
 
     public void setUser(User user) {
@@ -86,7 +86,7 @@ public class BorrowedItem {
     }
 
     public Item getItem() {
-        return item;
+        return this.item;
     }
 
     public void setItem(Item item) {
@@ -94,7 +94,7 @@ public class BorrowedItem {
     }
 
     public int getQuantityItem() {
-        return quantityItem;
+        return this.quantityItem;
     }
 
     public void setQuantityItem(int quantityItem) {
@@ -110,7 +110,7 @@ public class BorrowedItem {
 //    }
 
     public LocalDateTime getStartBorrowDateAt() {
-        return startBorrowDateAt;
+        return this.startBorrowDateAt;
     }
 
     public void setStartBorrowDateAt(LocalDateTime startBorrowDateAt) {
@@ -118,7 +118,7 @@ public class BorrowedItem {
     }
 
     public LocalDateTime getEndBorrowDateAt() {
-        return endBorrowDateAt;
+        return this.endBorrowDateAt;
     }
 
     public void setEndBorrowDateAt(LocalDateTime endBorrowDateAt) {

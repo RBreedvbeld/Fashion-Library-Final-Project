@@ -27,7 +27,7 @@ public class User {
 //    }
 
     @ManyToOne
-    @JoinColumn(name = "borrowed_id", referencedColumnName = "id")
+    @JoinColumn(name = "borrowedItem_id", referencedColumnName = "id")
     private BorrowedItem borrowedItem;
 
     // TODO: Check if this @OneTo?Many is necessary?!
@@ -51,11 +51,12 @@ public class User {
     private String boughtItems;
 
     // TODO: Find out how to write java for implementing if-statements for if user exists = true = member if not, casual user!
-    @Column(name = "customer_or_member")
-    private String customerOrMember;
+//    @Column(name = "customer")
+//    private boolean customer;
 //    @Column(name = "member")
 //    private boolean member;
 
+    // TODO remove item_borrowed_at, beause this is double data
     @Column(name = "item_borrowed_at")
     @CreationTimestamp
     private LocalDateTime itemBorrowedAt;
@@ -70,7 +71,8 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, String address, String email, String phone, int numBorrowedItems, String boughtItems, String customerOrMember, LocalDateTime itemBorrowedAt, LocalDateTime updatedAt) {
+//, boolean customer, boolean member
+    public User(String firstName, String lastName, String address, String email, String phone, int numBorrowedItems, String boughtItems, LocalDateTime itemBorrowedAt, LocalDateTime updatedAt) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -78,7 +80,8 @@ public class User {
         this.phone = phone;
         this.numBorrowedItems = numBorrowedItems;
         this.boughtItems = boughtItems;
-        this.customerOrMember = customerOrMember;
+//        this.customer = customer;
+//        this.member = member;
         this.itemBorrowedAt = itemBorrowedAt;
         this.updatedAt = updatedAt;
     }
@@ -166,12 +169,24 @@ public class User {
         this.boughtItems = boughtItems;
     }
 
-//    public String getCustomerOrMember() {
-//        return this.customerOrMember;
+    public List<BorrowedItem> getListBorrowedItems() {
+        return listBorrowedItems;
+    }
+
+//    public boolean isCustomer() {
+//        return this.customer;
 //    }
-//
-//    public void setCustomerOrMember(String customerOrMember) {
-//        this.customerOrMember = customerOrMember;
+
+//    public void setCustomer(boolean customer) {
+//        this.customer = customer;
+//    }
+
+//    public boolean isMember() {
+//        return this.member;
+//    }
+
+//    public void setMember(boolean member) {
+//        this.member = member;
 //    }
 
 //    public void setBorrowedItems(List<BorrowedItem> borrowedItems) {
@@ -198,13 +213,6 @@ public class User {
         this.numBorrowedItems = numBorrowedItems;
     }
 
-    public String getCustomerOrMember() {
-        return customerOrMember;
-    }
-
-    public void setCustomerOrMember(String customerOrMember) {
-        this.customerOrMember = customerOrMember;
-    }
 
     public void setCustomer(Customer tempCustomer) {
     }

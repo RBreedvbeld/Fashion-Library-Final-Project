@@ -1,10 +1,8 @@
 package com.booleanuk.api.fashionlibraryfinalproject.controller;
 
-import com.booleanuk.api.fashionlibraryfinalproject.model.BorrowedItem;
-import com.booleanuk.api.fashionlibraryfinalproject.model.Customer;
-import com.booleanuk.api.fashionlibraryfinalproject.model.Item;
-import com.booleanuk.api.fashionlibraryfinalproject.model.Order;
+import com.booleanuk.api.fashionlibraryfinalproject.model.*;
 import com.booleanuk.api.fashionlibraryfinalproject.repository.CustomerRepository;
+import com.booleanuk.api.fashionlibraryfinalproject.repository.ItemRepository;
 import com.booleanuk.api.fashionlibraryfinalproject.repository.OrderItemRepository;
 import com.booleanuk.api.fashionlibraryfinalproject.repository.OrderRepository;
 import jakarta.persistence.*;
@@ -15,10 +13,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("orders")
 public class OrderController {
 
     @Autowired
@@ -26,15 +25,20 @@ public class OrderController {
 
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private ItemRepository itemRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @Autowired
 
-    @GetMapping("/orders")
-    public List<Order> getAllPublishers() {
+    @GetMapping
+    public List<Order> getAllOrders() {
         return this.orderRepository.findAll();
     }
 
-    @GetMapping("/orders/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Order> getOrderById(@PathVariable int id) {
         Order order = null;
         order = this.orderRepository.findById(id).orElseThrow(() ->
@@ -42,18 +46,76 @@ public class OrderController {
         return ResponseEntity.ok(order);
     }
 
-    @PostMapping("/customers{customer_id}/orders/{order_id}")
-    public ResponseEntity<Order> createOrder(@RequestBody Order order, @PathVariable int id) {
-        Customer tempCustomer = this.customerRepository.findById(id).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Couldn't create order as item id not found"));
-        order.setCustomer(tempCustomer);
+    public record OrderRequest(int customerId, int[] itemIds){}
+    @PostMapping
+    public ResponseEntity<Order> createOrder(@RequestBody OrderRequest orderRequest) {
 
-        LocalDateTime createdAt = LocalDateTime.now();
-        order.setOrderDateAt(createdAt);
-        order.setUpdateOrderDateAt(createdAt);
+        Customer tempCustomer = this.customerRepository.findById(orderRequest.customerId).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not found customer."));
+        List<Item> items = Arrays.stream(orderRequest.itemIds).mapToObj(id -> {
+            return itemRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the item id."));
+        }).toList();
+        Order order = new Order();
+        order.setCustomer(tempCustomer);
+        order.setOrderDateAt(LocalDateTime.now());
+        orderRepository.save(order);
+
+        List<OrderItem> orderItems = items.stream().map(item -> {
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(order);
+            orderItem.setItem(item);
+            orderItem.setAmountItem(0);
+            return orderItem;
+        }).toList();
+        orderItemRepository.saveAll(orderItems);
         return new ResponseEntity<Order>(this.orderRepository.save(order), HttpStatus.CREATED);
     }
 
+//    public record OrderRequest(int customerId, int[] itemIds){}
+
+    @PutMapping("/{orderId}")
+    public ResponseEntity<Order> updateOrder(@PathVariable("orderId") int orderId, @RequestBody OrderRequest orderRequest) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the order."));
+
+        Customer tempCustomer = customerRepository.findById(orderRequest.customerId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the customer."));
+
+        List<Item> items = Arrays.stream(orderRequest.itemIds)
+                .mapToObj(id -> itemRepository.findById(id)
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the item with this id.")))
+                .toList();
+        order.setCustomer(tempCustomer);
+        order.setUpdateOrderDateAt(LocalDateTime.now());
+
+//        orderItemRepository.deleteByOrder(order);
+        List<OrderItem> removeOrderItems = orderItemRepository.findByOrderId(orderId);
+        orderItemRepository.deleteAllInBatch(removeOrderItems);
+
+        List<OrderItem> orderItems = items.stream().map(item -> {
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(order);
+            orderItem.setItem(item);
+            orderItem.setAmountItem(0);
+            return orderItem;
+        }).toList();
+
+        orderItemRepository.saveAll(orderItems);
+
+        return new ResponseEntity<Order>(orderRepository.save(order), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{orderId}")
+    public ResponseEntity<Order> deleteOrder(@PathVariable ("orderId") int orderId) {
+        Order orderToDelete = this.orderRepository.findById(orderId).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Couldn't delete as id not found"));
+         List<OrderItem> orderItems = orderItemRepository.findByOrder(orderToDelete);
+
+
+//        orderItemRepository.deleteAll(orderItems);
+        this.orderRepository.delete(orderToDelete);
+        return ResponseEntity.ok(orderToDelete);
+    }
 
 
 

@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,16 +19,13 @@ public class Order {
     private int id;
 
     // TODO Commented out @JsonIgnoreProperties Order from @ManyToOne
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     @JoinColumn (name = "customer_id", referencedColumnName = "id")
 //    @JsonIgnoreProperties("order")
     private Customer customer;
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("order")
-//    @JoinColumn (name = "orderItem_id", referencedColumnName = "id")
-////    @JsonIgnoreProperties("order")
-////    @JsonIncludeProperties(value = {""})
-    private List<OrderItem> orderItem;
+    private List<OrderItem> orderItems;
 
     @Column (name = "order_date")
     @CreationTimestamp

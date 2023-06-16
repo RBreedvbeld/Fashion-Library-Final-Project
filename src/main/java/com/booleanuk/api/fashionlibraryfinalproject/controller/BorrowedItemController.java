@@ -27,12 +27,12 @@ public class BorrowedItemController {
     @Autowired
     private ItemRepository itemRepository;
 
-    @GetMapping
-    public List<BorrowedItem> getAllPublishers() {
+    @GetMapping("/borroweditems")
+    public List<BorrowedItem> getAllBorrowedItems() {
         return this.borrowedItemRepository.findAll();
     }
 
-    @GetMapping ("/{id}")
+    @GetMapping ("/borroweditems/{id}")
     public ResponseEntity<BorrowedItem> getBorrowedItemById(@PathVariable int id) {
         // TODO: Check why this is  null!
         BorrowedItem borrowedItem = null;
