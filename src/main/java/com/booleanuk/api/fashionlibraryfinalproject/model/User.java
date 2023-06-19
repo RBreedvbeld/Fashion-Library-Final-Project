@@ -58,7 +58,7 @@ public class User {
 //    @Column(name = "member")
 //    private boolean member;
 
-    // TODO remove item_borrowed_at, beause this is double data
+    // TODO remove item_borrowed_at, because this is double data
     @Column(name = "item_borrowed_at")
     @CreationTimestamp
     private LocalDateTime itemBorrowedAt;
