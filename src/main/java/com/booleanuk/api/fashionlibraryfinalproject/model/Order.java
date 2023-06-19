@@ -24,68 +24,98 @@ public class Order {
 //    @JsonIgnoreProperties("order")
     private Customer customer;
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("order")
+    // TODO
+//    @JsonIgnoreProperties("order")
+    @JsonIncludeProperties(value = {"item_name", "category", "order_date" })
     private List<OrderItem> orderItems;
 
+    @Column(name = "item_name")
+    private String itemName;
+    @Column(name = "category")
+    private String category;
     @Column (name = "order_date")
     @CreationTimestamp
-    private LocalDateTime orderDateAt;
-
+    private LocalDateTime createAt;
     @Column (name = "update_order_date")
     @UpdateTimestamp
-    private LocalDateTime UpdateOrderDateAt;
+    private LocalDateTime updatedAt;
 
     public Order() {
     }
     public Order(int id) {
         this.id = id;
     }
-    public Order(Customer customer, LocalDateTime orderDateAt, LocalDateTime updateOrderDateAt) {
+
+
+    public Order(Customer customer, List<OrderItem> orderItems, String itemName, String category, LocalDateTime createAt, LocalDateTime updatedAt) {
         this.customer = customer;
-        this.orderDateAt = orderDateAt;
-        UpdateOrderDateAt = updateOrderDateAt;
+        this.orderItems = orderItems;
+        this.itemName = itemName;
+        this.category = category;
+        this.createAt = createAt;
+        this.updatedAt = updatedAt;
     }
 
+
     // if you need to print something to the console then use toString
+
+
     @Override
     public String toString() {
         return "Order{" +
                 "id=" + id +
                 ", customer=" + customer +
-                ", orderDateAt=" + orderDateAt +
-                ", UpdateOrderDateAt=" + UpdateOrderDateAt +
+                ", orderItems=" + orderItems +
+                ", itemName='" + itemName + '\'' +
+                ", category='" + category + '\'' +
+                ", createAt=" + createAt +
+                ", updatedAt=" + updatedAt +
                 '}';
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public List<OrderItem> getOrderItems() {
+        return this.orderItems;
     }
-
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+    public String getItemName() {
+        return this.itemName;
+    }
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+    public String getCategory() {
+        return this.category;
+    }
+    public void setCategory(String category) {
+        this.category = category;
+    }
+    public Customer getCustomer() {
+        return this.customer;
+    }
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 
-    public LocalDateTime getOrderDateAt() {
-        return orderDateAt;
+    public LocalDateTime getCreateAt() {
+        return this.createAt;
     }
-
-    public void setOrderDateAt(LocalDateTime orderDateAt) {
-        this.orderDateAt = orderDateAt;
+    public void setCreateAt(LocalDateTime createAt) {
+        this.createAt = createAt;
     }
-
-    public LocalDateTime getUpdateOrderDateAt() {
-        return UpdateOrderDateAt;
+    public LocalDateTime getUpdatedAt() {
+        return this.updatedAt;
     }
-
-    public void setUpdateOrderDateAt(LocalDateTime updateOrderDateAt) {
-        UpdateOrderDateAt = updateOrderDateAt;
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

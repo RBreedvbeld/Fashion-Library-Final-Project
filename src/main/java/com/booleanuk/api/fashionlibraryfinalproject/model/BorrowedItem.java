@@ -30,28 +30,26 @@ public class BorrowedItem {
     // TODO: use these startBorrowDateAt() and endBorrowDateAt() for calculating days that item has been borrowed!
     @Column(name = "start_borrow_date")
     @CreationTimestamp
-    private LocalDateTime startBorrowDateAt;
+    private LocalDateTime createdAt;
     @Column(name = "end_borrow_date")
     @UpdateTimestamp
-    private LocalDateTime endBorrowDateAt;
+    private LocalDateTime endedAt;
 
     // TODO: show in column if item is bought or borrowed!
 
 // constructors
-
     public BorrowedItem(){
-
     }
 
     // TODO HAve a look at the constructors, maybe need a Setter constructor?
     // TODO removed String itemSize out of constructor arguments
-    public BorrowedItem(User user, Item item, int quantityItem, LocalDateTime startBorrowDateAt, LocalDateTime endBorrowDateAt) {
+    public BorrowedItem(User user, Item item, int quantityItem, LocalDateTime createdAt, LocalDateTime endedAt) {
         this.user = user;
         this.item = item;
         this.quantityItem = quantityItem;
 //        this.itemSize = itemSize;
-        this.startBorrowDateAt = startBorrowDateAt;
-        this.endBorrowDateAt = endBorrowDateAt;
+        this.createdAt = createdAt;
+        this.endedAt = endedAt;
     }
 
     // toString method
@@ -63,8 +61,8 @@ public class BorrowedItem {
                 ", item=" + item +
                 ", quantityItem=" + quantityItem +
 //                ", itemSize='" + itemSize + '\'' +
-                ", startBorrowDateAt=" + startBorrowDateAt +
-                ", endBorrowDateAt=" + endBorrowDateAt +
+                ", createdAt=" + createdAt +
+                ", endedAt=" + endedAt +
                 '}';
     }
 
@@ -101,27 +99,19 @@ public class BorrowedItem {
         this.quantityItem = quantityItem;
     }
 
-//    public String getItemSize() {
-//        return itemSize;
-//    }
-//
-//    public void setItemSize(String itemSize) {
-//        this.itemSize = itemSize;
-//    }
-
     public LocalDateTime getStartBorrowDateAt() {
-        return this.startBorrowDateAt;
+        return this.createdAt;
     }
 
     public void setStartBorrowDateAt(LocalDateTime startBorrowDateAt) {
-        this.startBorrowDateAt = startBorrowDateAt;
+        this.createdAt = createdAt;
     }
 
     public LocalDateTime getEndBorrowDateAt() {
-        return this.endBorrowDateAt;
+        return this.endedAt;
     }
 
     public void setEndBorrowDateAt(LocalDateTime endBorrowDateAt) {
-        this.endBorrowDateAt = endBorrowDateAt;
+        this.endedAt = endedAt;
     }
 }

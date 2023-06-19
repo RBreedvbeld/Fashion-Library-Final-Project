@@ -1,8 +1,6 @@
 package com.booleanuk.api.fashionlibraryfinalproject.controller;
 
-import com.booleanuk.api.fashionlibraryfinalproject.model.BorrowedItem;
-import com.booleanuk.api.fashionlibraryfinalproject.model.Customer;
-import com.booleanuk.api.fashionlibraryfinalproject.model.User;
+import com.booleanuk.api.fashionlibraryfinalproject.model.*;
 import com.booleanuk.api.fashionlibraryfinalproject.repository.BorrowedItemRepository;
 import com.booleanuk.api.fashionlibraryfinalproject.repository.CustomerRepository;
 import com.booleanuk.api.fashionlibraryfinalproject.repository.UserRepository;
@@ -28,43 +26,40 @@ public class UserController {
 
 
     @GetMapping
-    public List<User> getAllPublishers() {
-        return this.userRepository.findAll();
-    }
-
-// DONE, check if <User> has the right reference!
-    @GetMapping("{id}")
     public List<User> getAllUsers() {
         return this.userRepository.findAll();
     }
 
+// DONE, check if <User> has the right reference!
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable int id) {
+        User user = null;
+        user = this.userRepository.findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "User with this id is not found."));
+        return ResponseEntity.ok(user);
+    }
+
     // TODO: Is this path coming from users to customers?
 //    ("customers/{id}/users")
-    @PostMapping("/users")
-    public ResponseEntity<User> createCustomerUser(@RequestBody User user, @PathVariable int id) {
-        Customer tempCustomer = this.customerRepository.findById(id).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not create User if customer is not found")); // TODO: not sure if this message is right.
-        user.setCustomer(tempCustomer);
+//    @PostMapping
+//    public ResponseEntity<User> createCustomerUser(@RequestBody User user, @PathVariable int id) {
+//        Customer tempCustomer = this.customerRepository.findById(id).orElseThrow(() ->
+//                new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not create User if customer is not found")); // TODO: not sure if this message is right.
+//        user.setCustomer(tempCustomer);
+//
+//        LocalDateTime createdAt = LocalDateTime.now();
+//        user.setItemBorrowedAt(createdAt);
+//        user.setUpdatedAt(createdAt);
+//        return new ResponseEntity<User>(this.userRepository.save(user), HttpStatus.CREATED);
+//    }
 
+    @PostMapping
+    public ResponseEntity<User> createUser(@RequestBody User user) {
         LocalDateTime createdAt = LocalDateTime.now();
         user.setItemBorrowedAt(createdAt);
         user.setUpdatedAt(createdAt);
         return new ResponseEntity<User>(this.userRepository.save(user), HttpStatus.CREATED);
     }
-//    @GetMapping("customers/{id}/users")
-//        public List<User> getAll(@PathVariable int customer_id) {
-//        List<User> users = this.userRepository.getCustomerByUserId(customer_id);
-//            return users;
-//    }
-//    @GetMapping("customers/{id}/users")
-//    public ResponseEntity<User> getUserById(@PathVariable int id) {
-//        User user = null;
-//        user = this.userRepository.findById(id).orElseThrow(() ->
-//                new ResponseStatusException(HttpStatus.NOT_FOUND, "User details with this id is not found."));
-//        return ResponseEntity.ok(user);
-//    }
-
-
 
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUserDetails(@PathVariable int id, @RequestBody User user) {

@@ -3,6 +3,7 @@ package com.booleanuk.api.fashionlibraryfinalproject.controller;
 import com.booleanuk.api.fashionlibraryfinalproject.model.Customer;
 import com.booleanuk.api.fashionlibraryfinalproject.model.User;
 import com.booleanuk.api.fashionlibraryfinalproject.repository.CustomerRepository;
+import com.booleanuk.api.fashionlibraryfinalproject.repository.ItemRepository;
 import com.booleanuk.api.fashionlibraryfinalproject.repository.OrderItemRepository;
 import com.booleanuk.api.fashionlibraryfinalproject.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;

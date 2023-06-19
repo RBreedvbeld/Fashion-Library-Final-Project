@@ -2,6 +2,7 @@ package com.booleanuk.api.fashionlibraryfinalproject.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -13,14 +14,14 @@ import java.util.List;
 @Table(name = "users")
 public class User {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
 //    @OneToOne
 //    @JoinColumn(name = "customer_id", referencedColumnName = "id")
-//   @JsonIgnoreProperties("user")
+//    @JsonIncludeProperties({"first_name", "last_name"})
+//    private List<Customer> listCustomers;
 //    private List<BorrowedItem> borrowedItems;
 //    public List<BorrowedItem> getListBorrowedItems() {
 //        return borrowedItems;
@@ -32,7 +33,8 @@ public class User {
 
     // TODO: Check if this @OneTo?Many is necessary?!
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonIgnoreProperties("user")
+//    @JsonIgnoreProperties("user")
+    @JsonIncludeProperties(value = {"first_name", "last_name"})
     private List<BorrowedItem> listBorrowedItems;
 
     @Column(name = "first_name")
@@ -80,12 +82,27 @@ public class User {
         this.phone = phone;
         this.numBorrowedItems = numBorrowedItems;
         this.boughtItems = boughtItems;
-//        this.customer = customer;
-//        this.member = member;
         this.itemBorrowedAt = itemBorrowedAt;
         this.updatedAt = updatedAt;
     }
 
+    // toString method
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", numBorrowedItems=" + numBorrowedItems +
+                ", boughtItems='" + boughtItems + '\'' +
+                ", itemBorrowedAt=" + itemBorrowedAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 
     // getter and setters
 

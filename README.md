@@ -47,9 +47,10 @@ I'd like to add an item to my basket.
 ```
 ```
 2.2
-As a member I want to see the stock availability of an item,
-So I can see if the size I need is available,
-I'd like to add that size of that specific item to my basket.
+As a member I want to borrow an/or multiple item(s),
+So I can have a nice outfit for my party,
+I'd like to add specific item(s) to my basket.
+
 ```
 ```
 2.3
@@ -67,9 +68,9 @@ I'd like to get the borrow-price per day, for each item that I have added to my 
 ```
 ```
 2.4
-As a member I want to borrow an/or multiple item(s),
-So I can have a nice outfit for my party,
-I'd like to add specific item(s) to my basket.
+As a member I want to see the stock availability of an item,
+So I can see if the size I need is available,
+I'd like to add that size of that specific item to my basket.
 ```
 ```
 2.5

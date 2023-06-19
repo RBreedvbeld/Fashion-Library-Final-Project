@@ -22,16 +22,13 @@ public class OrderController {
 
     @Autowired
     private OrderRepository orderRepository;
-
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
     private ItemRepository itemRepository;
-
     @Autowired
     private OrderItemRepository orderItemRepository;
 
-    @Autowired
 
     @GetMapping
     public List<Order> getAllOrders() {
@@ -57,7 +54,7 @@ public class OrderController {
         }).toList();
         Order order = new Order();
         order.setCustomer(tempCustomer);
-        order.setOrderDateAt(LocalDateTime.now());
+        order.setCreateAt(LocalDateTime.now());
         orderRepository.save(order);
 
         List<OrderItem> orderItems = items.stream().map(item -> {
@@ -86,9 +83,10 @@ public class OrderController {
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the item with this id.")))
                 .toList();
         order.setCustomer(tempCustomer);
-        order.setUpdateOrderDateAt(LocalDateTime.now());
+        order.setUpdatedAt(LocalDateTime.now());
 
 //        orderItemRepository.deleteByOrder(order);
+        // TODO: Find a solution to not completely delete the list of order items but only the one that not matches the existing ones.
         List<OrderItem> removeOrderItems = orderItemRepository.findByOrderId(orderId);
         orderItemRepository.deleteAllInBatch(removeOrderItems);
 

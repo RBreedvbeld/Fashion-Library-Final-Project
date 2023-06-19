@@ -1,7 +1,6 @@
 package com.booleanuk.api.fashionlibraryfinalproject.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -16,6 +15,11 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+//    private String title;
+//    private String itemType;
+//    private String brand;
+//    private String size;
+
 
 //    @ManyToOne
 //    @JoinColumn(name = "orderItem_id", referencedColumnName = "id")
@@ -23,7 +27,8 @@ public class Item {
 //    private OrderItem orderItem;
 
     @OneToMany(mappedBy = "item")
-    @JsonIgnoreProperties("item")
+//    @JsonIgnoreProperties("item")
+    @JsonIgnoreProperties(value = {"title", "item_type", "brand", "available_sizes"})
     private List<OrderItem> orderItems;
     @OneToMany(mappedBy = "item")
     @JsonIgnoreProperties("item")
@@ -43,8 +48,8 @@ public class Item {
 // TODO: I want to make itemStatus a function, because the system can see if the 'Size' is available as an option in the 'availableSizes'
     @Column(name = "item_status")
     private String itemStatus;
-    @Column(name = "price_per_day")
-    private String pricePerDay;
+    @Column(name = "credits_per_day")
+    private String creditsPerDay;
     @Column(name = "price_to_buy")
     private double priceToBuy;
     @Column(name = "created_at")
@@ -60,23 +65,46 @@ public class Item {
     }
 
     // TODO removed OrderItem orderItem from constructor because commented out in fields
-    public Item(String title, String brand, String size, String itemStatus, String pricePerDay, double priceToBuy) {
-        this.setTitle(title);
-        this.setBrand(brand);
-        this.setSize(size);
-        this.setItemStatus(itemStatus);
-        this.setPricePerDay(pricePerDay);
-        this.setPriceToBuy(priceToBuy);
-//        this.orderItem = orderItem;
-//        this.updatedAt = updatedAt;
-        LocalDateTime createdAt = LocalDateTime.now();
-        this.setCreatedAt(createdAt);
-        this.setUpdatedAt(createdAt);
+
+    // Added lists to constructor
+
+
+    public Item(String title, String itemType, String brand, String size, String availableSizes, String itemStatus, String creditsPerDay, double priceToBuy, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.title = title;
+        this.itemType = itemType;
+        this.brand = brand;
+        this.size = size;
+        this.availableSizes = availableSizes;
+        this.itemStatus = itemStatus;
+        this.creditsPerDay = creditsPerDay;
+        this.priceToBuy = priceToBuy;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public LocalDateTime setCreatedAt(LocalDateTime createdAt
     ) {
         return this.createdAt = createdAt;
+    }
+
+    // toString method
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", orderItems=" + orderItems +
+                ", listBorrowedItems=" + listBorrowedItems +
+                ", title='" + title + '\'' +
+                ", itemType='" + itemType + '\'' +
+                ", brand='" + brand + '\'' +
+                ", size='" + size + '\'' +
+                ", availableSizes='" + availableSizes + '\'' +
+                ", itemStatus='" + itemStatus + '\'' +
+                ", creditsPerDay='" + creditsPerDay + '\'' +
+                ", priceToBuy=" + priceToBuy +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
     }
 
     // getter- and setters
@@ -137,11 +165,11 @@ public class Item {
     }
 
     public String getPricePerDay() {
-        return this.pricePerDay;
+        return this.creditsPerDay;
     }
 
     public void setPricePerDay(String pricePerDay) {
-        this.pricePerDay = pricePerDay;
+        this.creditsPerDay = pricePerDay;
     }
 
     public double getPriceToBuy() {
@@ -158,5 +186,33 @@ public class Item {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+//    public List<OrderItem> getOrderItems() {
+//        return orderItems;
+//    }
+//
+//    public void setOrderItems(List<OrderItem> orderItems) {
+//        this.orderItems = orderItems;
+//    }
+//
+//    public List<BorrowedItem> getListBorrowedItems() {
+//        return listBorrowedItems;
+//    }
+//
+//    public void setListBorrowedItems(List<BorrowedItem> listBorrowedItems) {
+//        this.listBorrowedItems = listBorrowedItems;
+//    }
+
+    public String getCreditsPerDay() {
+        return creditsPerDay;
+    }
+
+    public void setCreditsPerDay(String creditsPerDay) {
+        this.creditsPerDay = creditsPerDay;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 }

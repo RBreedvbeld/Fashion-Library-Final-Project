@@ -1,10 +1,12 @@
 package com.booleanuk.api.fashionlibraryfinalproject.model;
 
+import com.booleanuk.api.fashionlibraryfinalproject.repository.ItemRepository;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.EnableMBeanExport;
 import org.springframework.data.domain.Sort;
 
@@ -14,6 +16,7 @@ import java.util.List;
 @Entity
 @Table(name = "order_items")
 public class OrderItem {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +30,7 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn(name = "order_id", referencedColumnName = "id")
+    @JsonIncludeProperties(value = {"item_name", "category"})
     private Order order;
 
     @Column(name = "amount_item")

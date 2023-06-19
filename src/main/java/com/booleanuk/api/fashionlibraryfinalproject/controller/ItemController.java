@@ -1,8 +1,11 @@
 package com.booleanuk.api.fashionlibraryfinalproject.controller;
 
 import com.booleanuk.api.fashionlibraryfinalproject.model.Item;
+import com.booleanuk.api.fashionlibraryfinalproject.repository.CustomerRepository;
 import com.booleanuk.api.fashionlibraryfinalproject.repository.ItemRepository;
+import com.booleanuk.api.fashionlibraryfinalproject.repository.OrderItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.EnableMBeanExport;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +15,16 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/items")
+@RequestMapping("items")
 public class ItemController {
 
     @Autowired
     private ItemRepository itemRepository;
+//    @Autowired
+//    private OrderItemRepository orderItemRepository;
+//    @Autowired
+//    private CustomerRepository customerRepository;
+
 
     @GetMapping
     public List<Item> getAllItems() {
@@ -31,13 +39,26 @@ public class ItemController {
         return ResponseEntity.ok(item);
     }
 
-    // TODO: @GetMapping by Type, Brand, Size, Availability and ItemStatus
-//    @GetMapping("{itemType}")
-//    public ResponseEntity<Item> getItemByType(@PathVariable String itemType) {
-//        Item item = null;
-//        item = this.itemRepository.findAll(item).orElseThrow(() ->
-//                new ResponseStatusException(HttpStatus.NOT_FOUND, "Item with this id is not found."));
-//        return ResponseEntity.ok(item);
+    // TODO: @GetMapping by Title, Type, Brand, Size, (Availability and ItemStatus)
+
+    @GetMapping("/title/{title}")
+    public List<Item> getItemsByTitle(@PathVariable String title) {
+        return itemRepository.findByTitleIgnoreCase(title);
+    }
+    @GetMapping("/itemtype/{itemType}")
+    public List<Item> getItemsByItemType(@PathVariable String itemType) {
+        return itemRepository.findByItemTypeIgnoreCase(itemType);
+    }
+    @GetMapping("/brand/{brand}")
+    public List<Item> getItemsByBrand(@PathVariable String brand) {
+        return itemRepository.findItemByBrandIgnoreCase(brand);
+    }
+//    @GetMapping("/brand/{brand}")
+//    public List<Item> getItemsBy(@PathVariable String ) {
+//        return itemRepository.findItemByTypeIgnoreCase( );
+//    }    @GetMapping("/brand/{brand}")
+//    public List<Item> getItemsBy(@PathVariable String ) {
+//        return itemRepository.findItemByTypeIgnoreCase( );
 //    }
 
     @PostMapping
@@ -47,6 +68,9 @@ public class ItemController {
         item.setUpdatedAt(createdAt);
         return new ResponseEntity<Item>(this.itemRepository.save(item), HttpStatus.CREATED);
     }
+
+
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Item> updateItem(@PathVariable int id, @RequestBody Item item) {

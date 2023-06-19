@@ -24,23 +24,12 @@ public class Customer {
 //    @JoinColumn(name = "order_id", referencedColumnName = "id")
 //    private Order order;
 
-
-
-    @Column(name = "item_name")
-    private String itemName;
-    @Column(name = "category")
-    private String category;
     // TODO: daysBorrowed() method that counts the days from start_date till end_date!!
-    @Column(name = "days_borrowed")
-    private String daysBorrowed;
     @Column(name = "payment_method")
     private String paymentMethod;
     // TODO: If cardNumber = null, than paymendMethod = 'Cash'
     @Column(name = "card_number")
     private String cardNumber;
-//    @Column(name = "item_borrowed_at")
-//    @CreationTimestamp
-//    private LocalDateTime itemBorrowedAt;
     @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
@@ -51,18 +40,26 @@ public class Customer {
     }
     public Customer(){
     }
-//    public List<Customer> customers;
-//LocalDateTime itemBorrowedAt
-
-    public Customer(String itemName, String category, String daysBorrowed, String paymentMethod, String cardNumber, LocalDateTime updatedAt) {
-        this.itemName = itemName;
-        this.category = category;
-        this.daysBorrowed = daysBorrowed;
+    public Customer(String paymentMethod, String cardNumber, LocalDateTime updatedAt) {
         this.paymentMethod = paymentMethod;
         this.cardNumber = cardNumber;
-//        this.itemBorrowedAt = itemBorrowedAt;
         this.updatedAt = updatedAt;
     }
+//    public List<Customer> customers;
+
+// toString
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", listOrder=" + listOrder +
+                ", paymentMethod='" + paymentMethod + '\'' +
+                ", cardNumber='" + cardNumber + '\'' +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
+
+    // getter and setters
 
     public int getId() {
         return this.id;
@@ -70,30 +67,6 @@ public class Customer {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getTitle() {
-        return this.itemName;
-    }
-
-    public void setTitle(String title) {
-        this.itemName = title;
-    }
-
-    public String getCategory() {
-        return this.category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getDaysBorrowed() {
-        return this.daysBorrowed;
-    }
-
-    public void setDaysBorrowed(String daysBorrowed) {
-        this.daysBorrowed = daysBorrowed;
     }
 
     public String getPaymentMethod() {
@@ -112,14 +85,6 @@ public class Customer {
         this.cardNumber = cardNumber;
     }
 
-//    public LocalDateTime getItemBorrowedAt() {
-//        return this.itemBorrowedAt;
-//    }
-//
-//    public void setItemBorrowedAt(LocalDateTime itemBorrowedAt) {
-//        this.itemBorrowedAt = itemBorrowedAt;
-//    }
-
     public LocalDateTime getUpdatedAt() {
         return this.updatedAt;
     }
@@ -127,7 +92,6 @@ public class Customer {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
-
 
     public void setUser(User tempUser) {
     }
