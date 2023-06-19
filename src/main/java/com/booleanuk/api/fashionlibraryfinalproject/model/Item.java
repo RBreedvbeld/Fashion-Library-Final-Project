@@ -26,13 +26,13 @@ public class Item {
 //    @JsonIgnoreProperties("items")
 //    private OrderItem orderItem;
 
-    @OneToMany(mappedBy = "item")
+//    @OneToMany(mappedBy = "item")
+////    @JsonIgnoreProperties("item")
+//    @JsonIgnoreProperties(value = {"title", "item_type", "brand", "available_sizes"})
+//    private List<OrderItem> orderItems;
+//    @OneToMany(mappedBy = "item")
 //    @JsonIgnoreProperties("item")
-    @JsonIgnoreProperties(value = {"title", "item_type", "brand", "available_sizes"})
-    private List<OrderItem> orderItems;
-    @OneToMany(mappedBy = "item")
-    @JsonIgnoreProperties("item")
-    private List<BorrowedItem> listBorrowedItems;
+//    private List<BorrowedItem> listBorrowedItems;
 
     @Column(name = "title")
     private String title;
@@ -92,8 +92,8 @@ public class Item {
     public String toString() {
         return "Item{" +
                 "id=" + id +
-                ", orderItems=" + orderItems +
-                ", listBorrowedItems=" + listBorrowedItems +
+//                ", orderItems=" + orderItems +
+//                ", listBorrowedItems=" + listBorrowedItems +
                 ", title='" + title + '\'' +
                 ", itemType='" + itemType + '\'' +
                 ", brand='" + brand + '\'' +
