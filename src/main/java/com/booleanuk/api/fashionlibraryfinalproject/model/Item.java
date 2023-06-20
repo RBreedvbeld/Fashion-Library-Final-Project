@@ -164,13 +164,13 @@ public class Item {
         this.itemStatus = itemStatus;
     }
 
-    public String getPricePerDay() {
-        return this.creditsPerDay;
-    }
-
-    public void setPricePerDay(String pricePerDay) {
-        this.creditsPerDay = pricePerDay;
-    }
+//    public String getCreditsPerDay() {
+//        return this.creditsPerDay;
+//    }
+//
+//    public void setCreditsPerDay(String pricePerDay) {
+//        this.creditsPerDay = pricePerDay;
+//    }
 
     public double getPriceToBuy() {
         return this.priceToBuy;

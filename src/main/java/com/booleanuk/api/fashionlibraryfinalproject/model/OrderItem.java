@@ -24,7 +24,7 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn(name =  "item_id", referencedColumnName = "id")
-    @JsonIncludeProperties(value = {"title", "type", "brand", "size", "price_per_day", "price_to_buy"})
+    @JsonIncludeProperties(value = {"title", "item_type", "brand", "size", "credits_per_day", "price_to_buy"})
 //    @JsonIgnoreProperties("orderItem")
     private Item item;
 

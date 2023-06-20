@@ -26,7 +26,7 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     // TODO
 //    @JsonIgnoreProperties("order")
-    @JsonIncludeProperties(value = {"item_name", "category", "order_date" })
+    @JsonIncludeProperties(value = {"item", "category", "order_date" })
     private List<OrderItem> orderItems;
 
     @Column(name = "item_name")

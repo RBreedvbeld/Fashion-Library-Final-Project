@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,8 +22,8 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
     List<Item> findByTitleIgnoreCase(String title);
     List<Item> findByItemTypeIgnoreCase(String itemType);
     List<Item> findItemByBrandIgnoreCase(String brand);
-//    List<Item> findItemBySizeIgnoreCase(String size);
-//    List<Item> findItemByCreditsPerDayIgnoreCase(String creditsPerDay);
-//
-
+    List<Item> findItemBySizeIgnoreCase(String size);
+    List<Item> findItemByCreditsPerDayIgnoreCase(String creditsPerDay);
+    List<Item> findByPriceToBuyBetween(double minPriceToBuy, double maxPriceToBuy);
+    List<Item> findByAvailableSizesIgnoreCase(String availableSizes);
 }

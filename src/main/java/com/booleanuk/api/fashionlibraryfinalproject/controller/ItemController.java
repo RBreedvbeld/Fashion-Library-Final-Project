@@ -11,7 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -20,11 +22,6 @@ public class ItemController {
 
     @Autowired
     private ItemRepository itemRepository;
-//    @Autowired
-//    private OrderItemRepository orderItemRepository;
-//    @Autowired
-//    private CustomerRepository customerRepository;
-
 
     @GetMapping
     public List<Item> getAllItems() {
@@ -40,7 +37,6 @@ public class ItemController {
     }
 
     // TODO: @GetMapping by Title, Type, Brand, Size, (Availability and ItemStatus)
-
     @GetMapping("/title/{title}")
     public List<Item> getItemsByTitle(@PathVariable String title) {
         return itemRepository.findByTitleIgnoreCase(title);
@@ -53,13 +49,31 @@ public class ItemController {
     public List<Item> getItemsByBrand(@PathVariable String brand) {
         return itemRepository.findItemByBrandIgnoreCase(brand);
     }
-//    @GetMapping("/brand/{brand}")
-//    public List<Item> getItemsBy(@PathVariable String ) {
-//        return itemRepository.findItemByTypeIgnoreCase( );
-//    }    @GetMapping("/brand/{brand}")
-//    public List<Item> getItemsBy(@PathVariable String ) {
-//        return itemRepository.findItemByTypeIgnoreCase( );
-//    }
+    @GetMapping("/size/{size}")
+    public List<Item> getItemsBySize(@PathVariable String size) {
+        return itemRepository.findItemBySizeIgnoreCase(size);
+    }
+   @GetMapping("/creditsperday/{creditsPerDay}")
+    public List<Item> getItemsByCreditsPerDay(@PathVariable String creditsPerDay) {
+        return itemRepository.findItemByCreditsPerDayIgnoreCase(creditsPerDay);
+    }
+    @GetMapping("/pricetobuy/{priceToBuy}")
+    public List<Item> getItemsByPriceRange(@RequestParam double minPriceToBuy, @RequestParam double maxPriceToBuy) {
+        return itemRepository.findByPriceToBuyBetween(minPriceToBuy, maxPriceToBuy);
+    }
+    @GetMapping("/availablesizes/{availableSizes}")
+    public List<Item> getAvailableSizes(@PathVariable String availableSizes) {
+        return itemRepository.findByAvailableSizesIgnoreCase(availableSizes);
+    }
+
+    @GetMapping("/availablesizes")
+    public ResponseEntity<List<String>> getAvailableSizes(@PathVariable int id) {
+        Item item = itemRepository.findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Item with this id is not found."));
+
+        List<String> availableSizes = Collections.singletonList(item.getAvailableSizes());
+        return ResponseEntity.ok(availableSizes);
+    }
 
     @PostMapping
     public ResponseEntity<Item> createItem(@RequestBody Item item) {
@@ -68,9 +82,6 @@ public class ItemController {
         item.setUpdatedAt(createdAt);
         return new ResponseEntity<Item>(this.itemRepository.save(item), HttpStatus.CREATED);
     }
-
-
-
 
     @PutMapping("/{id}")
     public ResponseEntity<Item> updateItem(@PathVariable int id, @RequestBody Item item) {
@@ -83,7 +94,7 @@ public class ItemController {
         itemToUpdate.setSize(item.getSize());
         itemToUpdate.setAvailableSizes(item.getAvailableSizes());
         itemToUpdate.setItemStatus(item.getItemStatus());
-        itemToUpdate.setPricePerDay(item.getPricePerDay());
+        itemToUpdate.setCreditsPerDay(item.getCreditsPerDay());
         itemToUpdate.setPriceToBuy(item.getPriceToBuy());
 
         LocalDateTime createdAt = LocalDateTime.now();

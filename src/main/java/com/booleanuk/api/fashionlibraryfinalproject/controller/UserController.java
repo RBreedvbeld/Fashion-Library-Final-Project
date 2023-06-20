@@ -57,7 +57,7 @@ public class UserController {
     public ResponseEntity<User> createUser(@RequestBody User user) {
         LocalDateTime createdAt = LocalDateTime.now();
         user.setItemBorrowedAt(createdAt);
-        user.setUpdatedAt(createdAt);
+//        user.setUpdatedAt(createdAt);
         return new ResponseEntity<User>(this.userRepository.save(user), HttpStatus.CREATED);
     }
 
@@ -74,11 +74,8 @@ public class UserController {
         userToUpdate.setBorrowedItems(user.getBorrowedItems());
         userToUpdate.setBoughtItems(user.getBoughtItems());
         // TODO: Check getCustomer
-//        userToUpdate.setCustomer(user.getCustomer());
-
         LocalDateTime createdAt = LocalDateTime.now();
         userToUpdate.setUpdatedAt(LocalDateTime.now());
-//        userToUpdate.setUpdatedAt(LocalDateTime.now());
         return new ResponseEntity<User>(this.userRepository.save(userToUpdate), HttpStatus.CREATED);
     }
 
