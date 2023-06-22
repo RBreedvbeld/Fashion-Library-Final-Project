@@ -21,13 +21,10 @@ public class Customer {
     @JsonIgnoreProperties("customer")
 //    @JsonIncludeProperties(value = {"order_date"})
     private List<Order> listOrder;
-//    @JoinColumn(name = "order_id", referencedColumnName = "id")
-//    private Order order;
 
     // TODO: daysBorrowed() method that counts the days from start_date till end_date!!
     @Column(name = "payment_method")
     private String paymentMethod;
-    // TODO: If cardNumber = null, than paymendMethod = 'Cash'
     @Column(name = "card_number")
     private String cardNumber;
     @Column(name = "updated_at")
@@ -45,7 +42,6 @@ public class Customer {
         this.cardNumber = cardNumber;
         this.updatedAt = updatedAt;
     }
-//    public List<Customer> customers;
 
 // toString
     @Override
@@ -94,5 +90,11 @@ public class Customer {
     }
 
     public void setUser(User tempUser) {
+    }
+
+    public void setCustomer(Customer tempCustomer) {
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
     }
 }

@@ -20,6 +20,7 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "borrowedItem_id", referencedColumnName = "id")
+    @JsonIncludeProperties(value = {""})
     private BorrowedItem borrowedItem;
 
     // TODO: Check if this @OneTo?Many is necessary?!

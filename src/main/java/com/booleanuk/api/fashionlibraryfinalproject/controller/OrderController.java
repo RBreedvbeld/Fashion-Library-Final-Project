@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
+
 @RestController
 @RequestMapping("orders")
 public class OrderController {
@@ -29,12 +30,12 @@ public class OrderController {
     @Autowired
     private OrderItemRepository orderItemRepository;
 
-
+    @CrossOrigin(origins = "*")
     @GetMapping
     public List<Order> getAllOrders() {
         return this.orderRepository.findAll();
     }
-
+    @CrossOrigin(origins = "*")
     @GetMapping("/{id}")
     public ResponseEntity<Order> getOrderById(@PathVariable int id) {
         Order order = null;
@@ -61,7 +62,7 @@ public class OrderController {
             OrderItem orderItem = new OrderItem();
             orderItem.setOrder(order);
             orderItem.setItem(item);
-            orderItem.setAmountItem(0);
+            orderItem.setAmountItem(1);
             return orderItem;
         }).toList();
         orderItemRepository.saveAll(orderItems);
@@ -69,7 +70,7 @@ public class OrderController {
     }
 
 //    public record OrderRequest(int customerId, int[] itemIds){}
-
+    @CrossOrigin(origins = "*")
     @PutMapping("/{orderId}")
     public ResponseEntity<Order> updateOrder(@PathVariable("orderId") int orderId, @RequestBody OrderRequest orderRequest) {
         Order order = orderRepository.findById(orderId)

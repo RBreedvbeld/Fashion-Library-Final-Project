@@ -26,4 +26,5 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
     List<Item> findItemByCreditsPerDayIgnoreCase(String creditsPerDay);
     List<Item> findByPriceToBuyBetween(double minPriceToBuy, double maxPriceToBuy);
     List<Item> findByAvailableSizesIgnoreCase(String availableSizes);
+
 }

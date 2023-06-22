@@ -21,12 +21,12 @@ public class Order {
     // TODO Commented out @JsonIgnoreProperties Order from @ManyToOne
     @ManyToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     @JoinColumn (name = "customer_id", referencedColumnName = "id")
-//    @JsonIgnoreProperties("order")
+    @JsonIncludeProperties(value = {"payment_method", "card_number"})
     private Customer customer;
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     // TODO
-//    @JsonIgnoreProperties("order")
-    @JsonIncludeProperties(value = {"item", "category", "order_date" })
+    @JsonIgnoreProperties("order")
+//    @JsonIncludeProperties(value = {"item", "category", "order_date" })
     private List<OrderItem> orderItems;
 
     @Column(name = "item_name")
@@ -56,10 +56,7 @@ public class Order {
         this.updatedAt = updatedAt;
     }
 
-
     // if you need to print something to the console then use toString
-
-
     @Override
     public String toString() {
         return "Order{" +

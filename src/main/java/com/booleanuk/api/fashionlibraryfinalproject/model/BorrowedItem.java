@@ -21,7 +21,7 @@ public class BorrowedItem {
     private User user;
     @ManyToOne
     @JoinColumn(name = "item_id", referencedColumnName = "id")
-    @JsonIncludeProperties(value = {"title", "size", "price_per_day", "price_to_buy"})
+    @JsonIncludeProperties(value = {"title", "size", "brand", "price_per_day", "price_to_buy"})
     private Item item;
 
     @Column(name = "quantity_item")

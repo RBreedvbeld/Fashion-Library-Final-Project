@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
 @RestController
 @RequestMapping
 public class OrderItemsController {
@@ -23,12 +24,12 @@ public class OrderItemsController {
     private OrderRepository orderRepository;
     @Autowired
     private ItemRepository itemRepository;
-
+    @CrossOrigin(origins = "*")
     @GetMapping("/orderitems")
     public List<OrderItem> getAll() {
         return this.orderItemRepository.findAll();
     }
-
+    @CrossOrigin(origins = "*")
     @GetMapping("/orderitems/{id}")
     public ResponseEntity<OrderItem> getOrderItemById(@PathVariable int id) {
         OrderItem orderItem = null;
@@ -36,7 +37,7 @@ public class OrderItemsController {
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Order item with this id is not found."));
         return ResponseEntity.ok(orderItem);
     }
-
+    @CrossOrigin(origins = "*")
     @PostMapping("items/{item_id}/orders/{order_id}")
     public ResponseEntity<OrderItem> createItemOrderItem(@RequestBody OrderItem orderItem, @PathVariable ("itemId") int itemId, @PathVariable("orderId") int orderId) {
         Item tempItem = this.itemRepository.findById(itemId).orElseThrow(() ->

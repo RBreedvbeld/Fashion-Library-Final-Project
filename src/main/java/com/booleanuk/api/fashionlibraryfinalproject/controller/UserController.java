@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -24,13 +25,14 @@ public class UserController {
     @Autowired
     private BorrowedItemRepository borrowedItemRepository;
 
-
+    @CrossOrigin(origins = "*")
     @GetMapping
     public List<User> getAllUsers() {
         return this.userRepository.findAll();
     }
 
 // DONE, check if <User> has the right reference!
+    @CrossOrigin(origins = "*")
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable int id) {
         User user = null;
@@ -39,20 +41,7 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    // TODO: Is this path coming from users to customers?
-//    ("customers/{id}/users")
-//    @PostMapping
-//    public ResponseEntity<User> createCustomerUser(@RequestBody User user, @PathVariable int id) {
-//        Customer tempCustomer = this.customerRepository.findById(id).orElseThrow(() ->
-//                new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not create User if customer is not found")); // TODO: not sure if this message is right.
-//        user.setCustomer(tempCustomer);
-//
-//        LocalDateTime createdAt = LocalDateTime.now();
-//        user.setItemBorrowedAt(createdAt);
-//        user.setUpdatedAt(createdAt);
-//        return new ResponseEntity<User>(this.userRepository.save(user), HttpStatus.CREATED);
-//    }
-
+    @CrossOrigin(origins = "*")
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
         LocalDateTime createdAt = LocalDateTime.now();
@@ -60,7 +49,7 @@ public class UserController {
 //        user.setUpdatedAt(createdAt);
         return new ResponseEntity<User>(this.userRepository.save(user), HttpStatus.CREATED);
     }
-
+    @CrossOrigin(origins = "*")
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUserDetails(@PathVariable int id, @RequestBody User user) {
         User userToUpdate = this.userRepository.findById(id).orElseThrow(() ->
@@ -79,7 +68,7 @@ public class UserController {
         return new ResponseEntity<User>(this.userRepository.save(userToUpdate), HttpStatus.CREATED);
     }
 
-
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/{id}")
     public ResponseEntity<User> deleteUserDetails(@PathVariable int id) {
         User userToDelete = this.userRepository.findById(id).orElseThrow(() ->

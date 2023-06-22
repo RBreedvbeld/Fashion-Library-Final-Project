@@ -15,24 +15,7 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-//    private String title;
-//    private String itemType;
-//    private String brand;
-//    private String size;
 
-
-//    @ManyToOne
-//    @JoinColumn(name = "orderItem_id", referencedColumnName = "id")
-//    @JsonIgnoreProperties("items")
-//    private OrderItem orderItem;
-
-//    @OneToMany(mappedBy = "item")
-////    @JsonIgnoreProperties("item")
-//    @JsonIgnoreProperties(value = {"title", "item_type", "brand", "available_sizes"})
-//    private List<OrderItem> orderItems;
-//    @OneToMany(mappedBy = "item")
-//    @JsonIgnoreProperties("item")
-//    private List<BorrowedItem> listBorrowedItems;
 
     @Column(name = "title")
     private String title;
@@ -64,11 +47,6 @@ public class Item {
         super();
     }
 
-    // TODO removed OrderItem orderItem from constructor because commented out in fields
-
-    // Added lists to constructor
-
-
     public Item(String title, String itemType, String brand, String size, String availableSizes, String itemStatus, String creditsPerDay, double priceToBuy, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.title = title;
         this.itemType = itemType;
@@ -92,8 +70,6 @@ public class Item {
     public String toString() {
         return "Item{" +
                 "id=" + id +
-//                ", orderItems=" + orderItems +
-//                ", listBorrowedItems=" + listBorrowedItems +
                 ", title='" + title + '\'' +
                 ", itemType='" + itemType + '\'' +
                 ", brand='" + brand + '\'' +
@@ -164,14 +140,6 @@ public class Item {
         this.itemStatus = itemStatus;
     }
 
-//    public String getCreditsPerDay() {
-//        return this.creditsPerDay;
-//    }
-//
-//    public void setCreditsPerDay(String pricePerDay) {
-//        this.creditsPerDay = pricePerDay;
-//    }
-
     public double getPriceToBuy() {
         return this.priceToBuy;
     }
@@ -187,22 +155,6 @@ public class Item {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
-
-//    public List<OrderItem> getOrderItems() {
-//        return orderItems;
-//    }
-//
-//    public void setOrderItems(List<OrderItem> orderItems) {
-//        this.orderItems = orderItems;
-//    }
-//
-//    public List<BorrowedItem> getListBorrowedItems() {
-//        return listBorrowedItems;
-//    }
-//
-//    public void setListBorrowedItems(List<BorrowedItem> listBorrowedItems) {
-//        this.listBorrowedItems = listBorrowedItems;
-//    }
 
     public String getCreditsPerDay() {
         return creditsPerDay;

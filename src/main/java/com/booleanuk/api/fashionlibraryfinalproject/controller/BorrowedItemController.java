@@ -27,11 +27,13 @@ public class BorrowedItemController {
     @Autowired
     private ItemRepository itemRepository;
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/borroweditems")
     public List<BorrowedItem> getAllBorrowedItems() {
         return this.borrowedItemRepository.findAll();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping ("/borroweditems/{id}")
     public ResponseEntity<BorrowedItem> getBorrowedItemById(@PathVariable int id) {
         // TODO: Check why this is  null!
@@ -43,6 +45,7 @@ public class BorrowedItemController {
     }
 
 //    ("items/{id}/borroweditems")
+    @CrossOrigin(origins = "*")
     @PostMapping("borroweditems")
     public ResponseEntity<BorrowedItem> createBorrowedItem(@RequestBody BorrowedItem borrowedItem, @PathVariable int id) {
         Item tempItem = this.itemRepository.findById(id).orElseThrow(() ->

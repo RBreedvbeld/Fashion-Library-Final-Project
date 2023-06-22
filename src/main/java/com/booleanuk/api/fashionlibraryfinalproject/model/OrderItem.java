@@ -30,16 +30,17 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn(name = "order_id", referencedColumnName = "id")
-    @JsonIncludeProperties(value = {"item_name", "category"})
+    @JsonIgnoreProperties(value = "order")
+//    @JsonIncludeProperties(value = {"item_name", "category"})
     private Order order;
 
     @Column(name = "amount_item")
     private int amountItem;
-    @Column(name = "total_credits_per_day")
-    private double totalPricePerDay;
-
-    @Column(name = "total_price_to_buy")
-    private double totalPriceToBuy;
+//    @Column(name = "total_credits_per_day")
+//    private double totalPricePerDay;
+//
+//    @Column(name = "total_price_to_buy")
+//    private double totalPriceToBuy;
 
     @Column(name = "created_at")
     @CreationTimestamp
@@ -55,8 +56,8 @@ public class OrderItem {
 
     public OrderItem(int amountItem, double totalPricePerDay, double totalPriceToBuy, LocalDateTime updatedAt, Order order, Item item) {
         this.amountItem = amountItem;
-        this.totalPricePerDay = totalPricePerDay;
-        this.totalPriceToBuy = totalPriceToBuy;
+//        this.totalPricePerDay = totalPricePerDay;
+//        this.totalPriceToBuy = totalPriceToBuy;
         this.updatedAt = updatedAt;
         this.order = order;
         this.item = item;
@@ -69,8 +70,8 @@ public class OrderItem {
                 ", item=" + item +
                 ", order=" + order +
                 ", amountItem=" + amountItem +
-                ", totalPricePerDay=" + totalPricePerDay +
-                ", totalPriceToBuy=" + totalPriceToBuy +
+//                ", totalPricePerDay=" + totalPricePerDay +
+//                ", totalPriceToBuy=" + totalPriceToBuy +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
@@ -92,21 +93,21 @@ public class OrderItem {
         this.amountItem = amountItem;
     }
 
-    public double getTotalPricePerDay() {
-        return totalPricePerDay;
-    }
-
-    public void setTotalPricePerDay(double totalPricePerDay) {
-        this.totalPricePerDay = totalPricePerDay;
-    }
-
-    public double getTotalPriceToBuy() {
-        return totalPriceToBuy;
-    }
-
-    public void setTotalPriceToBuy(double totalPriceToBuy) {
-        this.totalPriceToBuy = totalPriceToBuy;
-    }
+//    public double getTotalPricePerDay() {
+//        return totalPricePerDay;
+//    }
+//
+//    public void setTotalPricePerDay(double totalPricePerDay) {
+//        this.totalPricePerDay = totalPricePerDay;
+//    }
+//
+//    public double getTotalPriceToBuy() {
+//        return totalPriceToBuy;
+//    }
+//
+//    public void setTotalPriceToBuy(double totalPriceToBuy) {
+//        this.totalPriceToBuy = totalPriceToBuy;
+//    }
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
