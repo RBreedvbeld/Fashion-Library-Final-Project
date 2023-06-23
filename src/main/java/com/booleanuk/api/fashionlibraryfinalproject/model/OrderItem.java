@@ -21,6 +21,8 @@ public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Lob
+    private byte[] photo;
 
     @ManyToOne
     @JoinColumn(name =  "item_id", referencedColumnName = "id")
@@ -54,13 +56,14 @@ public class OrderItem {
         super();
     }
 
-    public OrderItem(int amountItem, double totalPricePerDay, double totalPriceToBuy, LocalDateTime updatedAt, Order order, Item item) {
+    public OrderItem(int amountItem, double totalPricePerDay, double totalPriceToBuy, LocalDateTime updatedAt, Order order, Item item, byte[] photo) {
         this.amountItem = amountItem;
 //        this.totalPricePerDay = totalPricePerDay;
 //        this.totalPriceToBuy = totalPriceToBuy;
         this.updatedAt = updatedAt;
         this.order = order;
         this.item = item;
+        this.photo= photo;
     }
 
     @Override
@@ -139,5 +142,13 @@ public class OrderItem {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
     }
 }
